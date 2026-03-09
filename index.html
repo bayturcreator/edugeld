@@ -1,0 +1,875 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudentConnect — Стажировки, обмен и стипендии</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <canvas id="animatedBg"></canvas>
+    
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo" onclick="showPage('home')">
+                <i class="fa-solid fa-graduation-cap"></i>
+                <span>StudentConnect</span>
+            </a>
+            <div class="nav-links" id="navLinks">
+                <a href="#" onclick="showPage('home')">Главная</a>
+                <a href="#" onclick="showPage('programs')">Программы</a>
+                <a href="#" onclick="showPage('universities')">Университеты</a>
+                <a href="#" onclick="showPage('scholarships')">Стипендии</a>
+                <a href="#" onclick="showPage('internships')">Практика</a>
+                <a href="#" onclick="showPage('deadlines')">Дедлайны</a>
+                <a href="#" onclick="showPage('about')">О нас</a>
+            </div>
+            <div class="nav-auth" id="navAuth">
+                <button class="btn-ghost" onclick="showPage('login')">Вход</button>
+                <button class="btn-primary" onclick="showPage('register')">Регистрация</button>
+            </div>
+            <div class="nav-user hidden" id="navUser">
+                <div class="user-menu" onclick="toggleUserMenu()">
+                    <div class="user-avatar" id="userAvatar">С</div>
+                    <span class="user-name" id="userName">Студент</span>
+                    <i class="fa-solid fa-chevron-down"></i>
+                </div>
+                <div class="dropdown-menu" id="userDropdown">
+                    <a href="#" onclick="showPage('profile')"><i class="fa-solid fa-user"></i> Мой профиль</a>
+                    <a href="#" onclick="showPage('favorites')"><i class="fa-solid fa-heart"></i> Избранное</a>
+                    <a href="#" onclick="showPage('applications')"><i class="fa-solid fa-file-lines"></i> Заявки</a>
+                    <hr>
+                    <a href="#" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Выйти</a>
+                </div>
+            </div>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Home Page -->
+    <section class="page active" id="page-home">
+        <div class="hero">
+            <div class="hero-content">
+                <h1>Открой двери к <span class="gradient-text">будущему</span></h1>
+                <p>Находи стажировки, программы обмена и стипендии от лучших университетов мира. Твой путь к успеху начинается здесь.</p>
+                <div class="hero-btns">
+                    <button class="btn-primary btn-lg" onclick="showPage('register')">Начать поиск</button>
+                    <button class="btn-outline btn-lg" onclick="showPage('programs')">Смотреть программы</button>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <span class="stat-number">500+</span>
+                        <span class="stat-label">Университетов</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">2000+</span>
+                        <span class="stat-label">Программ</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-number">10k+</span>
+                        <span class="stat-label">Студентов</span>
+                    </div>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="floating-card card-1">
+                    <i class="fa-solid fa-file-contract"></i>
+                    <span>Практика</span>
+                </div>
+                <div class="floating-card card-2">
+                    <i class="fa-solid fa-earth-americas"></i>
+                    <span>Обмен</span>
+                </div>
+                <div class="floating-card card-3">
+                    <i class="fa-solid fa-trophy"></i>
+                    <span>Стипендии</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ORHUN Advertisement Banner -->
+        <div class="orhun-banner" onclick="showPage('orhun')">
+            <div class="orhun-banner-content">
+                <div class="orhun-badge">
+                    <i class="fa-solid fa-bullhorn"></i> ОБЪЯВЛЕНИЕ
+                </div>
+                <div class="orhun-text">
+                    <h2>🎓 Программа ОРХУН</h2>
+                    <p>В Кыргызско-Турецком университете "Манас" начался приём заявок на программу обучения в Турции!</p>
+                    <div class="orhun-details">
+                        <span><i class="fa-solid fa-graduation-cap"></i> Бакалавриат & Магистратура</span>
+                        <span><i class="fa-solid fa-money-bill-wave"></i> Полная стипендия</span>
+                        <span><i class="fa-solid fa-calendar"></i> Дедлайн: 30 марта 2024</span>
+                    </div>
+                </div>
+                <div class="orhun-cta">
+                    <span>Узнать подробнее</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="features">
+            <h2>Почему StudentConnect?</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <h3>Умный поиск</h3>
+                    <p>Фильтруй программы по университету, направлению, стипендии и языку</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-user-graduate"></i>
+                    </div>
+                    <h3>Персональный профиль</h3>
+                    <p>Создай сильное портфолио с достижениями, оценками и языками</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-building-columns"></i>
+                    </div>
+                    <h3>Университеты</h3>
+                    <p>Прямой доступ к грантам и программам от ведущих вузов</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fa-solid fa-bell"></i>
+                    </div>
+                    <h3>Уведомления</h3>
+                    <p>Получай уведомления о новых программах и дедлайнах</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="featured-section">
+            <h2>Популярные программы</h2>
+            <div class="programs-preview" id="featuredPrograms">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ORHUN Program Page -->
+    <section class="page" id="page-orhun">
+        <div class="orhun-page">
+            <div class="orhun-hero-section">
+                <div class="orhun-logo">
+                    <i class="fa-solid fa-university"></i>
+                </div>
+                <h1>Программа ОРХУН</h1>
+                <p class="orhun-subtitle">Образовательная программа Кыргызско-Турецкого университета "Манас"</p>
+                <div class="orhun-stats">
+                    <div class="orhun-stat">
+                        <span class="stat-num">156</span>
+                        <span class="stat-text">Заявок подано</span>
+                    </div>
+                    <div class="orhun-stat">
+                        <span class="stat-num">45</span>
+                        <span class="stat-text">Мест</span>
+                    </div>
+                    <div class="orhun-stat">
+                        <span class="stat-num">30 мар</span>
+                        <span class="stat-text">Дедлайн</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="orhun-content">
+                <div class="orhun-info-grid">
+                    <div class="orhun-info-card">
+                        <i class="fa-solid fa-trophy"></i>
+                        <h3>Что включено</h3>
+                        <ul>
+                            <li>✅ Бесплатное обучение</li>
+                            <li>✅ Проживание в общежитии</li>
+                            <li>✅ Питание</li>
+                            <li>✅ Авиабилеты</li>
+                            <li>✅ Ежемесячная стипендия</li>
+                            <li>✅ Медицинская страховка</li>
+                        </ul>
+                    </div>
+                    <div class="orhun-info-card">
+                        <i class="fa-solid fa-university"></i>
+                        <h3>Университеты Турции</h3>
+                        <ul>
+                            <li>🏛 Стамбульский университет</li>
+                            <li>🏛 Университет Анкары</li>
+                            <li>🏛 Университет Ближнего Востока</li>
+                            <li>🏛 Технический университет</li>
+                            <li>🏛 Университет Коч</li>
+                            <li>🏛 И другие топ-вузы</li>
+                        </ul>
+                    </div>
+                    <div class="orhun-info-card">
+                        <i class="fa-solid fa-book"></i>
+                        <h3>Направления</h3>
+                        <ul>
+                            <li>💻 Computer Science</li>
+                            <li>⚙️ Инженерия</li>
+                            <li>🏥 Медицина</li>
+                            <li>📚 Педагогика</li>
+                            <li>💰 Экономика</li>
+                            <li>🎨 Искусство</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Рейтинг зарегистрировавшихся -->
+                <div class="orhun-rating-section">
+                    <h2>📊 Рейтинг абитуриентов</h2>
+                    <p class="rating-subtitle">Средний балл GPA подавших заявки</p>
+                    
+                    <div class="rating-chart">
+                        <div class="rating-bar">
+                            <div class="rating-label">4.8 - 5.0</div>
+                            <div class="rating-progress">
+                                <div class="rating-fill high" style="width: 35%"></div>
+                            </div>
+                            <div class="rating-count">32 человека</div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="rating-label">4.5 - 4.7</div>
+                            <div class="rating-progress">
+                                <div class="rating-fill medium" style="width: 45%"></div>
+                            </div>
+                            <div class="rating-count">48 человек</div>
+                        </div>
+                        <div class="rating-bar">
+                            <div class="rating-label">4.0 - 4.4</div>
+                            <div class="rating-progress">
+                                <div class="rating-fill low" style="width: 20%"></div>
+                            </div>
+                            <div class="rating-count">21 человек</div>
+                        </div>
+                    </div>
+
+                    <div class="orhun-applicants">
+                        <h3>👥 Недавно подавшие заявки</h3>
+                        <div class="applicants-list" id="orhunApplicants">
+                            <!-- Заполняется JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="orhun-cta-section">
+                    <button class="btn-primary btn-lg" onclick="applyToOrhun()">
+                        <i class="fa-solid fa-paper-plane"></i> Подать заявку
+                    </button>
+                    <p class="cta-note">Осталось мест: 45 из 201</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Login Page -->
+    <section class="page" id="page-login">
+        <div class="auth-container">
+            <div class="auth-card">
+                <div class="auth-header">
+                    <h2>С возвращением!</h2>
+                    <p>Войди в свой аккаунт</p>
+                </div>
+                <form id="loginForm" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="loginEmail" placeholder="student@university.ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" id="loginPassword" placeholder="Введите пароль" required>
+                    </div>
+                    <div class="form-options">
+                        <label class="checkbox">
+                            <input type="checkbox">
+                            <span>Запомнить меня</span>
+                        </label>
+                        <a href="#" class="forgot-link">Забыли пароль?</a>
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Войти</button>
+                </form>
+                <div class="auth-divider">
+                    <span>или</span>
+                </div>
+                <button class="btn-google" onclick="handleGoogleLogin()">
+                    <i class="fa-brands fa-google"></i>
+                    Войти через Google
+                </button>
+                <p class="auth-switch">
+                    Нет аккаунта? <a href="#" onclick="showPage('register')">Зарегистрироваться</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Register Page -->
+    <section class="page" id="page-register">
+        <div class="auth-container">
+            <div class="auth-card auth-card-wide">
+                <div class="auth-header">
+                    <h2>Присоединяйся к нам!</h2>
+                    <p>Выбери тип аккаунта</p>
+                </div>
+                <div class="role-selector">
+                    <button class="role-btn active" data-role="student" onclick="selectRole('student')">
+                        <i class="fa-solid fa-user-graduate"></i>
+                        <span>Студент</span>
+                    </button>
+                    <button class="role-btn" data-role="university" onclick="selectRole('university')">
+                        <i class="fa-solid fa-building-columns"></i>
+                        <span>Университет</span>
+                    </button>
+                </div>
+                <form id="registerForm" onsubmit="handleRegister(event)">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Имя</label>
+                            <input type="text" id="regName" placeholder="Иван" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Фамилия</label>
+                            <input type="text" id="regSurname" placeholder="Иванов" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="regEmail" placeholder="ivan@university.ru" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Пароль</label>
+                        <input type="password" id="regPassword" placeholder="Минимум 8 символов" minlength="8" required>
+                    </div>
+                    <div class="form-group" id="universityField" style="display: none;">
+                        <label>Название университета</label>
+                        <input type="text" id="regUniversity" placeholder="МГУ им. Ломоносова">
+                    </div>
+                    <button type="submit" class="btn-primary btn-full">Создать аккаунт</button>
+                </form>
+                <div class="auth-divider">
+                    <span>или</span>
+                </div>
+                <button class="btn-google" onclick="handleGoogleRegister()">
+                    <i class="fa-brands fa-google"></i>
+                    Зарегистрироваться через Google
+                </button>
+                <p class="auth-switch">
+                    Уже есть аккаунт? <a href="#" onclick="showPage('login')">Войти</a>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Student Profile Page -->
+    <section class="page" id="page-profile">
+        <div class="profile-container">
+            <div class="profile-header">
+                <div class="profile-avatar-section">
+                    <div class="profile-avatar" id="profileAvatar">ИИ</div>
+                    <button class="avatar-edit"><i class="fa-solid fa-camera"></i></button>
+                </div>
+                <div class="profile-info">
+                    <h1 id="profileName">Иван Иванов</h1>
+                    <p id="profileEmail">ivan@university.ru</p>
+                    <p id="profileUniversity"><i class="fa-solid fa-building-columns"></i> МГУ им. Ломоносова</p>
+                    <div class="profile-badges">
+                        <span class="badge"><i class="fa-solid fa-star"></i> Активный студент</span>
+                        <span class="badge"><i class="fa-solid fa-check-circle"></i> Профиль подтверждён</span>
+                    </div>
+                </div>
+                <button class="btn-outline" onclick="editProfile()"><i class="fa-solid fa-pen"></i> Редактировать</button>
+            </div>
+
+            <div class="profile-tabs">
+                <button class="tab-btn active" data-tab="achievements" onclick="showProfileTab('achievements')">Заслуги</button>
+                <button class="tab-btn" data-tab="academic" onclick="showProfileTab('academic')">Академия</button>
+                <button class="tab-btn" data-tab="languages" onclick="showProfileTab('languages')">Языки</button>
+                <button class="tab-btn" data-tab="documents" onclick="showProfileTab('documents')">Документы</button>
+            </div>
+
+            <div class="profile-content">
+                <!-- Заслуги -->
+                <div class="tab-content active" id="tab-achievements">
+                    <div class="section-header">
+                        <h3>Мои заслуги</h3>
+                        <button class="btn-primary btn-sm" onclick="addAchievement()"><i class="fa-solid fa-plus"></i> Добавить</button>
+                    </div>
+                    <div class="achievements-grid" id="achievementsList">
+                        <!-- Заполняется JS -->
+                    </div>
+                </div>
+
+                <!-- Академия -->
+                <div class="tab-content" id="tab-academic">
+                    <div class="section-header">
+                        <h3>Академическая справка</h3>
+                        <button class="btn-primary btn-sm" onclick="editAcademic()"><i class="fa-solid fa-pen"></i> Редактировать</button>
+                    </div>
+                    <div class="academic-info">
+                        <div class="info-card">
+                            <label>Средний балл</label>
+                            <span class="info-value" id="gpaValue">4.5</span>
+                            <span class="info-max">/ 5.0</span>
+                        </div>
+                        <div class="info-card">
+                            <label>Курс</label>
+                            <span class="info-value" id="courseValue">3</span>
+                            <span class="info-max">курс</span>
+                        </div>
+                        <div class="info-card">
+                            <label>Факультет</label>
+                            <span class="info-value" id="facultyValue">Компьютерные науки</span>
+                        </div>
+                    </div>
+                    <div class="transcript-section">
+                        <h4>Аттестат/Диплом</h4>
+                        <div class="transcript-preview" id="transcriptPreview">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <span>transcript.pdf</span>
+                            <button class="btn-icon"><i class="fa-solid fa-download"></i></button>
+                        </div>
+                        <input type="file" id="transcriptUpload" accept=".pdf,.jpg,.png" style="display: none;" onchange="uploadTranscript(event)">
+                        <button class="btn-outline btn-sm" onclick="document.getElementById('transcriptUpload').click()">
+                            <i class="fa-solid fa-upload"></i> Загрузить
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Языки -->
+                <div class="tab-content" id="tab-languages">
+                    <div class="section-header">
+                        <h3>Владение языками</h3>
+                        <button class="btn-primary btn-sm" onclick="addLanguage()"><i class="fa-solid fa-plus"></i> Добавить</button>
+                    </div>
+                    <div class="languages-list" id="languagesList">
+                        <!-- Заполняется JS -->
+                    </div>
+                </div>
+
+                <!-- Документы -->
+                <div class="tab-content" id="tab-documents">
+                    <div class="section-header">
+                        <h3>Мои документы</h3>
+                    </div>
+                    <div class="documents-grid">
+                        <div class="document-card">
+                            <i class="fa-solid fa-passport"></i>
+                            <div class="doc-info">
+                                <span class="doc-name">Паспорт</span>
+                                <span class="doc-status verified"><i class="fa-solid fa-check"></i> Подтверждён</span>
+                            </div>
+                        </div>
+                        <div class="document-card">
+                            <i class="fa-solid fa-id-card"></i>
+                            <div class="doc-info">
+                                <span class="doc-name">Студенческий билет</span>
+                                <span class="doc-status verified"><i class="fa-solid fa-check"></i> Подтверждён</span>
+                            </div>
+                        </div>
+                        <div class="document-card">
+                            <i class="fa-solid fa-file-contract"></i>
+                            <div class="doc-info">
+                                <span class="doc-name">Рекомендательное письмо</span>
+                                <span class="doc-status pending"><i class="fa-solid fa-clock"></i> Ожидает</span>
+                            </div>
+                            <button class="btn-icon"><i class="fa-solid fa-upload"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Page -->
+    <section class="page" id="page-programs">
+        <div class="programs-container">
+            <div class="page-header">
+                <h1>Программы обмена</h1>
+                <p>Найди идеальную программу для обучения за рубежом</p>
+            </div>
+            <div class="filters-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Поиск программ..." id="programSearch" oninput="filterPrograms()">
+                </div>
+                <select id="filterUniversity" onchange="filterPrograms()">
+                    <option value="">Все университеты</option>
+                </select>
+                <select id="filterDuration" onchange="filterPrograms()">
+                    <option value="">Любая длительность</option>
+                    <option value="1">1 семестр</option>
+                    <option value="2">2 семестра</option>
+                    <option value="1year">1 год</option>
+                </select>
+                <select id="filterScholarship" onchange="filterPrograms()">
+                    <option value="">Стипендия</option>
+                    <option value="full">Полная</option>
+                    <option value="partial">Частичная</option>
+                    <option value="none">Нет</option>
+                </select>
+            </div>
+            <div class="programs-grid" id="programsGrid">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Universities Page -->
+    <section class="page" id="page-universities">
+        <div class="universities-container">
+            <div class="page-header">
+                <h1>Университеты</h1>
+                <p>Изучай предложения от ведущих вузов</p>
+            </div>
+            <div class="universities-grid" id="universitiesGrid">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Scholarships Page -->
+    <section class="page" id="page-scholarships">
+        <div class="scholarships-container">
+            <div class="page-header">
+                <h1>Стипендии</h1>
+                <p>Найди финансовую поддержку для своей учёбы</p>
+            </div>
+            <div class="scholarship-categories">
+                <button class="category-btn active" data-category="all" onclick="filterScholarships('all')">
+                    <i class="fa-solid fa-globe"></i> Все
+                </button>
+                <button class="category-btn" data-category="full" onclick="filterScholarships('full')">
+                    <i class="fa-solid fa-trophy"></i> Полные
+                </button>
+                <button class="category-btn" data-category="partial" onclick="filterScholarships('partial')">
+                    <i class="fa-solid fa-percent"></i> Частичные
+                </button>
+                <button class="category-btn" data-category="grant" onclick="filterScholarships('grant')">
+                    <i class="fa-solid fa-hand-holding-dollar"></i> Гранты
+                </button>
+            </div>
+            <div class="filters-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Поиск стипендий..." id="scholarshipSearch" oninput="filterScholarships()">
+                </div>
+                <select id="filterScholarshipCountry" onchange="filterScholarships()">
+                    <option value="">Все страны</option>
+                    <option value="Узбекистан">Узбекистан</option>
+                    <option value="Казахстан">Казахстан</option>
+                    <option value="Кыргызстан">Кыргызстан</option>
+                    <option value="Таджикистан">Таджикистан</option>
+                    <option value="Россия">Россия</option>
+                </select>
+                <select id="filterScholarshipLevel" onchange="filterScholarships()">
+                    <option value="">Уровень обучения</option>
+                    <option value="bachelor">Бакалавриат</option>
+                    <option value="master">Магистратура</option>
+                    <option value="phd">Аспирантура</option>
+                </select>
+            </div>
+            <div class="scholarships-grid" id="scholarshipsGrid">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Scholarship Detail Modal -->
+    <div class="modal" id="scholarshipModal">
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h3 id="scholarshipModalTitle">Название стипендии</h3>
+                <button class="modal-close" onclick="closeScholarshipModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="scholarshipModalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Internships Page -->
+    <section class="page" id="page-internships">
+        <div class="internships-container">
+            <div class="page-header">
+                <h1>Практика</h1>
+                <p>Получи опыт работы в ведущих компаниях</p>
+            </div>
+            <div class="filters-bar">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" placeholder="Поиск стажировок..." id="internshipSearch" oninput="filterInternships()">
+                </div>
+                <select id="filterLocation" onchange="filterInternships()">
+                    <option value="">Любая локация</option>
+                    <option value="remote">Удалённо</option>
+                    <option value="onsite">На месте</option>
+                </select>
+                <select id="filterPaid" onchange="filterInternships()">
+                    <option value="">Оплата</option>
+                    <option value="paid">Платно</option>
+                    <option value="unpaid">Бесплатно</option>
+                </select>
+            </div>
+            <div class="internships-grid" id="internshipsGrid">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Favorites Page -->
+    <section class="page" id="page-favorites">
+        <div class="favorites-container">
+            <div class="page-header">
+                <h1>Избранное</h1>
+                <p>Сохранённые программы и стажировки</p>
+            </div>
+            <div class="favorites-list" id="favoritesList">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Applications Page -->
+    <section class="page" id="page-applications">
+        <div class="applications-container">
+            <div class="page-header">
+                <h1>Мои заявки</h1>
+                <p>Отслеживай статус своих заявок</p>
+            </div>
+            <div class="applications-list" id="applicationsList">
+                <!-- Заполняется JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Deadlines Page -->
+    <section class="page" id="page-deadlines">
+        <div class="deadlines-container">
+            <div class="page-header">
+                <h1>Ближайшие дедлайны</h1>
+                <p>Не пропусти важные даты подачи заявок</p>
+            </div>
+            
+            <div class="deadline-filters">
+                <button class="deadline-filter active" data-filter="all" onclick="filterDeadlines('all')">
+                    <i class="fa-solid fa-list"></i> Все
+                </button>
+                <button class="deadline-filter" data-filter="program" onclick="filterDeadlines('program')">
+                    <i class="fa-solid fa-graduation-cap"></i> Программы
+                </button>
+                <button class="deadline-filter" data-filter="scholarship" onclick="filterDeadlines('scholarship')">
+                    <i class="fa-solid fa-trophy"></i> Стипендии
+                </button>
+            </div>
+
+            <div class="deadlines-timeline" id="deadlinesTimeline"></div>
+        </div>
+    </section>
+
+    <!-- About Page -->
+    <section class="page" id="page-about">
+        <div class="about-container">
+            <div class="about-hero">
+                <div class="about-logo">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                    <h1>University Partnership</h1>
+                </div>
+                <p class="about-tagline">Объединяем таланты с возможностями</p>
+            </div>
+
+            <div class="about-mission">
+                <div class="mission-card">
+                    <i class="fa-solid fa-bullseye"></i>
+                    <h3>Наша миссия</h3>
+                    <p>Мы создаём мост между студентами Центральной Азии и лучшими образовательными возможностями мира. Помогаем молодым людям найти стажировки, стипендии и программы обмена для реализации их потенциала.</p>
+                </div>
+                <div class="mission-card">
+                    <i class="fa-solid fa-eye"></i>
+                    <h3>Наше видение</h3>
+                    <p>Стать ведущей платформой для образовательного обмена в Центральной Азии, где каждый студент может найти путь к своему успеху.</p>
+                </div>
+            </div>
+
+            <div class="about-team">
+                <h2>Наша команда</h2>
+                <div class="team-grid">
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #667eea, #764ba2)">
+                            <span>БШ</span>
+                        </div>
+                        <h3>Байтур Шабырбеков</h3>
+                        <p class="team-role">Генеральный директор</p>
+                        <p class="team-desc">Стратегическое развитие компании и партнёрства с университетами</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="#"><i class="fa-brands fa-telegram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c)">
+                            <span>АН</span>
+                        </div>
+                        <h3>Адилет Нурмат уулу</h3>
+                        <p class="team-role">Креативный директор</p>
+                        <p class="team-desc">Дизайн и визуальная коммуникация бренда</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe)">
+                            <span>КМ</span>
+                        </div>
+                        <h3>Курсанбек Максатбек уулу</h3>
+                        <p class="team-role">Финансовый директор</p>
+                        <p class="team-desc">Управление финансами и бюджетирование проектов</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="#"><i class="fa-brands fa-telegram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #43e97b, #38f9d7)">
+                            <span>ДК</span>
+                        </div>
+                        <h3>Динмухамед Кожобеков</h3>
+                        <p class="team-role">Администратор</p>
+                        <p class="team-desc">Операционное управление и координация процессов</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+                            <a href="#"><i class="fa-brands fa-telegram"></i></a>
+                        </div>
+                    </div>
+                    <div class="team-card">
+                        <div class="team-avatar" style="background: linear-gradient(135deg, #fa709a, #fee140)">
+                            <span>АН</span>
+                        </div>
+                        <h3>Абдулахатов Нуртилек</h3>
+                        <p class="team-role">ИТ разработчик</p>
+                        <p class="team-desc">Разработка и техническая поддержка платформы</p>
+                        <div class="team-social">
+                            <a href="#"><i class="fa-brands fa-github"></i></a>
+                            <a href="#"><i class="fa-brands fa-telegram"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="about-stats">
+                <div class="stat-item">
+                    <span class="stat-number">500+</span>
+                    <span class="stat-label">Университетов-партнёров</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">2000+</span>
+                    <span class="stat-label">Студентов нашли программы</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">$2M+</span>
+                    <span class="stat-label">Стипендий выиграно</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">15+</span>
+                    <span class="stat-label">Стран присутствия</span>
+                </div>
+            </div>
+
+            <div class="about-contact">
+                <h2>Связаться с нами</h2>
+                <div class="contact-grid">
+                    <div class="contact-item">
+                        <i class="fa-solid fa-envelope"></i>
+                        <span>info@universitypartnership.kg</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-phone"></i>
+                        <span>+996 700 123 456</span>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <span>Бишкек, Кыргызстан</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- University Dashboard (for university users) -->
+    <section class="page" id="page-university-dashboard">
+        <div class="university-dashboard">
+            <div class="dashboard-header">
+                <h1>Панель университета</h1>
+                <button class="btn-primary" onclick="showCreateProgramModal()">
+                    <i class="fa-solid fa-plus"></i> Добавить программу
+                </button>
+            </div>
+            <div class="dashboard-stats">
+                <div class="dash-stat">
+                    <span class="dash-stat-number" id="totalPrograms">12</span>
+                    <span class="dash-stat-label">Программ</span>
+                </div>
+                <div class="dash-stat">
+                    <span class="dash-stat-number" id="totalApplications">48</span>
+                    <span class="dash-stat-label">Заявок</span>
+                </div>
+                <div class="dash-stat">
+                    <span class="dash-stat-number" id="acceptedStudents">15</span>
+                    <span class="dash-stat-label">Принято</span>
+                </div>
+            </div>
+            <div class="your-programs">
+                <h3>Ваши программы</h3>
+                <div class="programs-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Название</th>
+                                <th>Тип</th>
+                                <th>Стипендия</th>
+                                <th>Заявок</th>
+                                <th>Статус</th>
+                                <th>Действия</th>
+                            </tr>
+                        </thead>
+                        <tbody id="universityProgramsTable">
+                            <!-- Заполняется JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Заголовок</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Dynamic content -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast notifications -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <script src="js/utils.js"></script>
+    <script src="js/data.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/render.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Личный кабинет</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #f4f6f9; }
+        h1, h2 { color: #333; }
+        ul { list-style-type: none; padding: 0; }
+        li { background: #fff; margin: 5px 0; padding: 10px; border-radius: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        button { margin-left: 10px; padding: 5px 10px; background: #2d89ef; color: white; border: none; cursor: pointer; border-radius: 3px; }
+        button:hover { background: #1b5fbd; }
+    </style>
+</head>
+<body>
+
+<h1>Список зарегистрированных студентов</h1>
+<ul id="userList"></ul>
+
+<h2>Доступные стажировки и стипендии</h2>
+<ul id="programsList"></ul>
+
+<script>
+// === Список пользователей ===
+const users = JSON.parse(localStorage.getItem("users")) || [];
+const userList = document.getElementById("userList");
+
+users.forEach(user => {
+    const li = document.createElement("li");
+    li.textContent = `Имя: ${user.name}, Email: ${user.email}, Университет: ${user.university}`;
+    userList.appendChild(li);
+});
+
+// === Список программ ===
+const programs = [
+    { title: "IT стажировка", location: "Бишкек" },
+    { title: "Erasmus+ обмен", location: "Европа" },
+    { title: "Стипендия DAAD", location: "Германия" }
+];
+
+const programsList = document.getElementById("programsList");
+
+programs.forEach((prog, index) => {
+    const li = document.createElement("li");
+    li.textContent = `${prog.title} - ${prog.location} `;
+
+    // Кнопка "Подать заявку"
+    const btn = document.createElement("button");
+    btn.textContent = "Подать заявку";
+
+    btn.addEventListener("click", () => {
+        if(users.length === 0){
+            alert("Нет зарегистрированных студентов!");
+            return;
+        }
+
+        // Берём первого пользователя (пока упрощённо)
+        const currentUser = users[0];
+
+        // Сохраняем заявку в LocalStorage
+        let applications = JSON.parse(localStorage.getItem("applications")) || [];
+        applications.push({
+            student: currentUser.name,
+            email: currentUser.email,
+            program: prog.title
+        });
+        localStorage.setItem("applications", JSON.stringify(applications));
+
+        alert(`Вы подали заявку на: ${prog.title}`);
+    });
+
+    li.appendChild(btn);
+    programsList.appendChild(li);
+});
+</script>
+
+</body>
+</html>
